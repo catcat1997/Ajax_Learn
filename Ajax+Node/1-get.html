@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .result {
+            width: 200px;
+            height: 100px;
+            border: solid 1px rgb(253, 71, 253)
+        }
+    </style>
+</head>
+
+<body>
+    <button>click to send (get)request</button>
+    <div class="result"></div>
+    <script>
+        var btn = document.querySelector('button');
+        var result = document.querySelector('.result');
+        btn.onclick = function() {
+
+            // 1. 創建ajax  xhr
+            const xhr = new XMLHttpRequest();
+            // 2. 初始化  設置ajax.open() 請求方法和url
+            xhr.open('GET', 'http://127.0.0.1:3000/server?a=100&b=222&c=333');
+            // 3.發送
+            xhr.send();
+            // 4.事件綁定
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    // 判斷響應狀態碼
+                    // if(xhr.status === 200){
+                    if (xhr.status >= 200 && xhr.status <= 299) {
+                        // 處理結果  行,頭,空行,體
+                        // 1.響應行
+                        console.log(xhr.status); // 狀態碼  200
+                        console.log(xhr.statusText); // 狀態字符串  OK
+                        console.log(xhr.getAllResponseHeaders());
+                        // 所有響應頭 
+                        // content-length: 10
+                        // content-type: text/html; charset=utf-8
+                        console.log(xhr.response); // 響應體 Hello Ajax
+
+                        result.innerHTML = xhr.status + '</br>' + xhr.statusText + '</br>' + xhr.getAllResponseHeaders() + '</br>' + xhr.response + '</br>';
+                    } else {
+
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

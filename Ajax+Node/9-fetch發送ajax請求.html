@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .result {
+            width: 200px;
+            height: 100px;
+            border: solid 1px rgb(253, 71, 253)
+        }
+    </style>
+</head>
+
+<body>
+    <button>ajax request</button>
+    <div class="result"></div>
+    <script>
+        var btn = document.querySelector('button');
+        var result = document.querySelector('.result');
+        let sendData = "{post-body-form-data: '123'}";
+        btn.onclick = function() {
+            fetch('http://127.0.0.1:3000/fetch-server?vip=10&price=2000', {
+                // config
+                method: 'post',
+                headers: {
+                    "Content-Type": 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: JSON.stringify(sendData),
+            }).then(response => {
+                return response.text();
+            }).then(response => {
+                result.innerHTML = response;
+            })
+        }
+    </script>
+</body>
+
+</html>

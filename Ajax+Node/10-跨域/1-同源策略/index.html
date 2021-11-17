@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>click to get data</button>
+    <script>
+        var btn = document.querySelector('button');
+        let xhr = new XMLHttpRequest();
+        btn.onclick = function() {
+            // 如滿足同源策略 url可簡寫
+            // xhr.open('GET', 'http://127.0.0.1:4000/data');
+            xhr.open('GET', '/data');
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        console.log(xhr.response);
+                    }
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>

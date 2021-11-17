@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    用戶名: <input type="text" id="username">
+    <p></p>
+    <script>
+        const input = document.querySelector('#username');
+        const p = document.querySelector('p');
+        // 1.定義獲取數據後調用的回調函數
+        function handle(data) {
+            input.style.border = 'solid 1px #f00'
+            p.innerHTML = data.msg;
+        }
+        input.onblur = function() {
+            // 取得input的值
+            let username = this.value;
+            // 向服務端發送request 檢測用戶是否存在
+
+            // 2.動態生成對服務端JS進行引用的代碼
+            // 2.1創建script標簽，並設置其src屬性
+            const script = document.createElement('script');
+            // 2.2設置url為提供jsonp服務的url地址，並在該url中設置相關callback參數
+            script.src = 'http://127.0.0.1:3000/check-username?api=handle';
+            // 2.3把script標簽加入document文檔中，此時調用開始。
+            document.body.appendChild(script);
+            // 把這個sciprt標簽放到body最後
+            // 有了script標簽, 就是get請求了
+
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
+    <style>
+        .result {
+            width: 200px;
+            height: 100px;
+            border: solid 1px rgb(253, 71, 253)
+        }
+    </style>
+</head>
+
+<body>
+    <button>get</button>
+    <button>post</button>
+    <button>ajax</button>
+    <div class="result"></div>
+    <script>
+        const btns = document.querySelectorAll('button');
+        let result = document.querySelector('.result');
+        // axios配置 baseURL
+        axios.defaults.baseURL = 'http://127.0.0.1:3000'
+            // get
+        btns[0].onclick = function() {
+            axios.get('/axios-server', {
+                // url 參數 params
+                params: {
+                    id: 1,
+                    price: 100
+                },
+                // 請求頭 headers
+                headers: {
+                    name: 'peter',
+                    ages: '24'
+                }
+            }).then(function(response) {
+                result.innerHTML = response;
+            }).catch(function(err) {
+                result.innerHTML = err;
+            })
+        };
+        // post
+        btns[1].onclick = function() {
+            axios.post('/axios-server', {
+                // 請求體 post body
+                data: {
+                    username: 'admin',
+                    password: 'admin'
+                }
+            }, {
+                // url參數query params
+                params: {
+                    id: 200,
+                    name: 'post'
+                },
+                // 請求頭setHeader
+                headers: {
+                    name: 123
+                },
+            }).then(function(response) {
+                // axios的response有全部內容 我們取響應體 data
+                let res = JSON.stringify(response.data);
+                result.innerHTML = res;
+            }).catch(function(err) {
+                result.innerHTML = err;
+            })
+        };
+        btns[2].onclick = function() {
+            axios({
+                method: 'post',
+                url: '/axios-server',
+                params: {
+                    id: 1,
+                    name: 'peter'
+                },
+                headers: {
+                    myHead: '3heads'
+                },
+                data: {
+                    data1: 'abc',
+                    data2: 'def'
+                }
+            }).then(response => {
+                result.innerHTML = JSON.stringify(response.data);
+                console.log(response.status);
+                console.log(response.statusText);
+                console.log(response.headers);
+                console.log(response.data);
+            });
+        };
+    </script>
+</body>
+
+</html>
